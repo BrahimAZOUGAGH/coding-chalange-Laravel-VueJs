@@ -21,6 +21,7 @@
                 <div class="row">
                     <nav class="navbar navbar-expand-lg col-12 bg-primary my-3">
                         <router-link class="nav-item nav-link text-white" to="/">Home</router-link>
+                        <router-link class="nav-item nav-link text-white" to="/test">Test</router-link>
                     </nav>
                     <router-view></router-view>
                 </div>

@@ -7,7 +7,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-import VueRouter from 'vue-router'
+import Router from 'vue-router'
 
 /**
  * The following block of code may be used to automatically register your
@@ -20,10 +20,11 @@ import VueRouter from 'vue-router'
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.use(VueRouter)
+Vue.use(Router)
 
 const routes = [
     { path: '/', name: 'home', component: require('./components/ExampleComponent.vue').default },
+    { path: '/test', name: 'test', component: require('./components/TestComponent.vue').default },
 ]
     
 const router = new Router({
@@ -39,4 +40,5 @@ const router = new Router({
 
 const app = new Vue({
     el: '#app',
+    router,
 });
