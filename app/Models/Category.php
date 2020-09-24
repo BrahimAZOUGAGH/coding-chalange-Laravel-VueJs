@@ -33,6 +33,17 @@ class Category extends Model
      */
     public function products()
     {
-        return $this->hasMany('App\Models\Product');
+        return $this->belongsToMany('App\Models\Product');
+    }
+
+    // Function delete all products and category on relation with category in case of deleting category
+    public static function boot() {
+        parent::boot();
+        self::deleting(function($category) {
+            $category->products()->detach();
+            $category->childrens()->each(function($children) {
+                $children->delete();
+            });
+        });
     }
 }

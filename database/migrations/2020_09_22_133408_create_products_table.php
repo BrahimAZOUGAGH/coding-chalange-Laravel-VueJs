@@ -18,8 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->longText('description');
             $table->float('price', 8, 2);
-            $table->string('image')->default('products/default-image.png');
-            $table->foreignId('category_id')->constrained();
+            $table->string('image')->default('/storage/products/default-image.png');
             $table->timestamps();
         });
     }

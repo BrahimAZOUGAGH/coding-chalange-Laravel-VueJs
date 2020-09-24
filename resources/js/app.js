@@ -8,6 +8,7 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 import Router from 'vue-router'
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
 /**
  * The following block of code may be used to automatically register your
@@ -21,10 +22,18 @@ import Router from 'vue-router'
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.use(Router)
+// Install BootstrapVue
+Vue.use(BootstrapVue)
+// Optionally install the BootstrapVue icon components plugin
+Vue.use(IconsPlugin)
 
 const routes = [
-    { path: '/', name: 'home', component: require('./components/ExampleComponent.vue').default },
-    { path: '/test', name: 'test', component: require('./components/TestComponent.vue').default },
+    { path: '/', name: 'product_list', component: require('./components/Product/ListComponent.vue').default },
+    { path: '/product/add', name: 'product_add', component: require('./components/Product/FormComponent.vue').default },
+    { path: '/product/edit/:id', name: 'product_edit', component: require('./components/Product/FormComponent.vue').default, props: true },
+    { path: '/category', name: 'category_list', component: require('./components/Category/ListComponent.vue').default },
+    { path: '/category/add', name: 'product_add', component: require('./components/category/FormComponent.vue').default },
+    { path: '/category/edit/:id', name: 'product_edit', component: require('./components/category/FormComponent.vue').default, props: true },
 ]
     
 const router = new Router({

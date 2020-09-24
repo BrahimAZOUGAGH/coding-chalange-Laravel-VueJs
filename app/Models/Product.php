@@ -13,8 +13,17 @@ class Product extends Model
      * Product can belong to one category
      * 
      */
-    public function category()
+    public function categories()
     {
-        return $this->belongsTo('App\Models\Product');
+        return $this->belongsToMany('App\Models\Category');
+    }
+
+
+    // Function delete all category on relation with product in case of deleting product
+    public static function boot() {
+        parent::boot();
+        self::deleting(function($product) {
+            $product->categories()->detach();
+        });
     }
 }

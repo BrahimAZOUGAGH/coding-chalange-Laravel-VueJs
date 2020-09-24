@@ -18,7 +18,9 @@ class ProductTest extends TestCase
     public function testArticlesAreUpdatedCorrectly()
     {
 
-        $product = Product::factory()->create();
+        $product = Product::factory()
+                            ->has(Category::factory()->count(3))
+                            ->create();
 
         $payload = [
             'name' => 'Product name updated',

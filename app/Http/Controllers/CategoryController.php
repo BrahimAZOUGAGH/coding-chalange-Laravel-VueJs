@@ -14,7 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return Category::all();
+        return Category::with('parent')->get();
     }
 
     /**
@@ -29,8 +29,8 @@ class CategoryController extends Controller
         $category->name = $request->input('name');
         
         // If you choose a parent category
-        if($request->filled('category_parent')){
-            $category_parent = Category::find($request->input('category_parent'));
+        if($request->filled('parent_id')){
+            $category_parent = Category::find($request->input('parent_id'));
             $category->parent()->associate($category_parent);
         }
 
@@ -62,8 +62,8 @@ class CategoryController extends Controller
         $category->name = $request->input('name');
         
         // If you choose a parent category
-        if($request->filled('category_parent') && $request->input('category_parent') != $category->parent_id){
-            $category_parent = Category::find($request->input('category_parent'));
+        if($request->filled('parent_id') && $request->input('parent_id') != $category->parent_id){
+            $category_parent = Category::find($request->input('parent_id'));
             $category->parent()->associate($category_parent);
         }
 

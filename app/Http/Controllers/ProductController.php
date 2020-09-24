@@ -15,7 +15,17 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Product::all();
+        return Product::with('categories')->get();
+    }
+
+    /**
+     * Send list of category of parent to add product page
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return Category::doesntHave('parent')->get();
     }
 
     /**
@@ -37,11 +47,11 @@ class ProductController extends Controller
             $product->image = $this->productImage($request->photo);
         }
 
-        // Associate the product with the selected category
-        $category = Category::find($request->input('category_id'));
-        $product->category()->associate($category);
-
         $product->save();
+
+        // Associate the product with the selected category
+        $category_ids = explode(",", $request->input('category_id'));
+        $product->categories()->attach($category_ids);
 
         return response()->json($product, 201);
     }
@@ -54,7 +64,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        return Product::find($id);
+        return Product::with('categories')->find($id);
     }
 
     /**
@@ -78,9 +88,8 @@ class ProductController extends Controller
         }
 
         // Associate the product with the selected category
-        if($request->filled('category_id') && $request->input('category_parent') != $product->category_id){
-            $category = Category::find($request->input('category_id'));
-            $product->category()->associate($category);
+        if($request->filled('category_id')){
+            $product->categories()->sync($request->input('category_id'));
         }
 
         $product->save();
@@ -111,6 +120,6 @@ class ProductController extends Controller
         $product_image_name = 'product_'.time().'.'.$image->extension();
         $image->storeAs('products',$product_image_name);
 
-        return 'products/'.$product_image_name;
+        return '/storage/products/'.$product_image_name;
     }
 }
