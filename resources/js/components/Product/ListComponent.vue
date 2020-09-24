@@ -6,7 +6,7 @@
                 {{ alert.message }}
             </b-alert>
 
-            <b-row  v-if="products.length > 0">
+            <b-row  v-if="init_products.length > 0">
                 <b-form-group class="col-4" label="Min price:" label-for="min_price">
                     <b-form-input
                         id="min_price"
@@ -163,11 +163,19 @@
                 let category_id = this.filter.category_id
                 if(this.filter.minPrice || this.filter.maxPrice){
                     this.products = this.products.filter(function (el) {
-                        return el.category_id <= category_id
+                        let stat = false
+                        el.categories.forEach(
+                            category => category.id == category_id ? stat = true : stat = false
+                        )
+                        return stat
                     })
                 }else if(this.filter.category_id){
                     this.products = this.init_products.filter(function (el) {
-                        return el.category_id <= category_id
+                        let stat = false
+                        el.categories.forEach(
+                            category => category.id == category_id ? stat = true : stat = false
+                        )
+                        return stat
                     })
                 }else{
                     this.products = this.init_products
