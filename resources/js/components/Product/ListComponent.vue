@@ -48,7 +48,7 @@
             <b-table striped hover :items="products" :fields="fields" v-if="products.length > 0">
                 
                 <template v-slot:cell(category)="row" >
-                    <b-span v-for="category,index in row.item.categories">> {{ category.name }} </br></b-span>
+                    <span v-for="category,index in row.item.categories">> {{ category.name }} </br></span>
                 </template>
 
                 <template v-slot:cell(image)="row" >
